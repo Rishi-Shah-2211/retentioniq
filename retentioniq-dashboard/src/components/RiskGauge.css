@@ -1,0 +1,40 @@
+.gauge-wrapper {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    margin: 20px auto;
+  }
+  
+  .gauge-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .gauge-value {
+    font-size: 42px;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 700;
+  }
+  
+  .gauge-label {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #ef4444;
+  }
+
+  .gauge-wrapper {
+    perspective: 800px;
+  }
+  
+  .gauge-wrapper svg {
+    transform: rotateX(12deg);
+    transition: transform 0.4s ease;
+  }
+  
+  .gauge-wrapper:hover svg {
+    transform: rotateX(0deg) scale(1.03);
+  }

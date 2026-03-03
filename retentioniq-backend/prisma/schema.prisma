@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id             String   @id
+  email          String   @unique
+  company_name   String
+  plan           String
+  signup_date    DateTime
+  country        String
+
+  subscriptions  subscriptions[]
+  product_usage  product_usage[]
+  churn_labels   churn_labels[]
+  churn_predictions churn_predictions[]
+}
+
+model subscriptions {
+  id               String   @id
+  user_id          String
+  start_date       DateTime
+  end_date         DateTime?
+  status           String
+  monthly_revenue  Float
+
+  users users @relation(fields: [user_id], references: [id])
+}
+
+model product_usage {
+  id                   String   @id
+  user_id              String
+  week_start_date      DateTime
+  logins               Int
+  features_used        Int
+  avg_session_minutes  Float
+  support_tickets      Int
+
+  users users @relation(fields: [user_id], references: [id])
+}
+
+model churn_labels {
+  id          String   @id
+  user_id     String
+  churned     Boolean
+  churn_date  DateTime?
+
+  users users @relation(fields: [user_id], references: [id])
+}
+
+model churn_predictions {
+  id                 String   @id
+  user_id            String
+  prediction_date    DateTime
+  churn_probability  Float
+  risk_level         String
+  model_version      String
+
+  users users @relation(fields: [user_id], references: [id])
+}
